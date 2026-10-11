@@ -12,3 +12,29 @@
 .family-message strong{color:#945870;font-weight:700}
 .family-message .family-message-final{font-family:'Quicksand',sans-serif;color:#ab6481;font-weight:700;font-size:clamp(1.03rem,2vw,1.15rem);margin:25px auto 0}
 @media(max-width:600px){.family-message{padding:52px 15px 56px}.family-message-inner{border-radius:24px;padding:32px 19px}.family-message p{line-height:1.7}.family-message::before,.family-message::after{font-size:2.7rem}}
+
+/* Mensaje familiar integrado en portada */
+.brand .brand-surnames{font-size:.53em;letter-spacing:0;color:#906a78;vertical-align:middle}
+.hero-name .hero-surnames{display:block;margin-top:6px;color:#98647c;font-size:.26em;font-weight:700;letter-spacing:-.025em;line-height:1.35}
+.hero-name .hero-heart{color:#dfbe75}
+.hero .family-message{max-width:530px;margin:0 0 13px;padding:0;overflow:visible;border:0;border-radius:20px;background:transparent;text-align:left}
+.hero .family-message::before,.hero .family-message::after{display:none}
+.hero .family-message-inner{max-width:none;padding:23px 25px 21px;background:rgba(255,255,255,.72);border-color:rgba(220,161,178,.38);border-radius:22px;box-shadow:0 12px 34px rgba(159,112,128,.085)}
+.hero .family-message-ornament{margin-bottom:9px;font-size:1.1rem;letter-spacing:.12em}
+.hero .family-message h2{font-size:clamp(1.1rem,1.9vw,1.36rem);line-height:1.32;margin-bottom:14px}
+.hero .family-message p{font-size:.91rem;line-height:1.65;margin:0 0 11px}
+.hero .family-message .family-message-final{font-size:.94rem;line-height:1.55;margin-top:13px;margin-bottom:0}
+.hero .desktop-cta{margin-top:13px}
+@media(max-width:880px){
+  .hero .family-message{margin:0 auto 13px;text-align:center;max-width:570px}
+  .hero .family-message-inner{padding:24px}
+}
+@media(max-width:600px){
+  .brand .brand-surnames{display:none}
+  .hero-name .hero-surnames{font-size:.3em;line-height:1.4}
+  .hero .family-message{max-width:100%;margin:0 12px 12px}
+  .hero .family-message-inner{padding:21px 18px}
+  .hero .family-message h2{font-size:1.23rem}
+  .hero .family-message p{font-size:.89rem;line-height:1.58}
+  .hero .family-message .family-message-final{font-size:.92rem}
+}
