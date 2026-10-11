@@ -99,20 +99,22 @@ function crearFormularioEloisa() {
       .setRequired(false);
   });
 
-  // Un formulario nuevo NO tiene hoja de respuestas todavía.
-  // getDestinationId() lanza una excepción en ese caso: no lo consultamos
-  // sin controlar explícitamente dicha situación.
-  let destinationId = null;
-  try {
-    destinationId = form.getDestinationId();
-  } catch (error) {
-    if (!/no response destination/i.test(String(error))) {
-      throw error; // no ocultar otros errores de permisos o de Google
+  // Vincular el formulario sin consultar su destino previo. Un Google Form
+  // recién creado todavía no tiene hoja de respuestas y ciertas consultas
+  // a su destino pueden lanzar una excepción.
+  const destinationKey = 'FORMULARIO_ELOISA_HOJA_VINCULADA';
+  const alreadyLinked = props.getProperty(destinationKey) === ss.getId();
+  const existingResponseSheet = ss.getSheets().some(sheet => {
+    try {
+      return String(sheet.getFormUrl() || '').includes(form.getId());
+    } catch (error) {
+      return false;
     }
-  }
-  if (destinationId !== ss.getId()) {
+  });
+  if (!alreadyLinked && !existingResponseSheet) {
     form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
   }
+  props.setProperty(destinationKey, ss.getId());
 
   if (typeof form.supportsAdvancedResponderPermissions === 'function' &&
       form.supportsAdvancedResponderPermissions()) {
