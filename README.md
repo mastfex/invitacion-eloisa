@@ -8,6 +8,28 @@ Sitio estático de una sola página para **GitHub Pages**. Incluye la tarjeta fi
 
 No se guardan nombres de asistentes en GitHub ni en el código. El Google Form y las respuestas deben tener acceso restringido a los organizadores.
 
+## 0) Crear el Google Form automáticamente (opción recomendada)
+
+Ya existe una hoja privada para el cumpleaños de Eloísa Violeta Rubin Ojeda:
+[**Eloísa — Confirmaciones de asistencia**](https://docs.google.com/spreadsheets/d/1rEGzczsDsnGCe5kdeHZSZTjJcCmGcah5z3QvBQWXx2c/edit).
+
+El formulario puede crearse con **un script que solo debes ejecutar una vez**, desde tu propia cuenta:
+
+1. Abre esa hoja de Google Sheets.
+2. En el menú, pulsa **Extensiones → Apps Script**.
+3. En el editor elimina el contenido de `Code.gs` y copia el archivo [`scripts/crear-formulario-eloisa.gs`](scripts/crear-formulario-eloisa.gs).
+4. Guarda, selecciona la función **`crearFormularioEloisa`** y pulsa **Ejecutar**.
+5. Google solicitará permisos para crear un formulario y vincularlo a la hoja. Revisa y autoriza.
+6. Vuelve a la pestaña **Panel** de la hoja: en **B23** estará el **enlace público para responder**, y en **B24** el enlace privado de edición.
+7. Envíanos el enlace público de B23 para ponerlo automáticamente en `js/config.js`, o pégalo tú mismo allí.
+8. Revisa que la nueva pestaña de respuestas se llame **Respuestas**, y haz una respuesta de prueba desde un navegador en modo privado.
+
+El script crea las cinco preguntas con opciones, publicación para responder sin cuenta Google, fecha, hora, ubicación y mensaje de agradecimiento; guarda las respuestas en la hoja existente. Si vuelves a ejecutarlo, reutilizará el formulario anterior del mismo proyecto de Apps Script en vez de crear copias.
+
+**No compartas la hoja de Google Sheets ni el enlace B24; son privados.** Compartir únicamente el formulario `/viewform`. La autorización para ejecutar el script la realiza el propietario, nunca el invitado.
+
+### Alternativa: crear el formulario manualmente
+
 ## 1) Activar Google Forms (sin SQL y sin backend)
 
 **Estado actual:** la integración con Google Forms está programada, pero no se registrarán asistentes hasta que el organizador cree y publique un formulario real y pegue su enlace. No inventar enlaces ni simular confirmaciones.
