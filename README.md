@@ -8,22 +8,38 @@ Sitio estático de una sola página para **GitHub Pages**. Incluye la tarjeta fi
 
 No se guardan nombres de asistentes en GitHub ni en el código. El Google Form y las respuestas deben tener acceso restringido a los organizadores.
 
-## 1) Crear el formulario gratuito
+## 1) Activar Google Forms (sin SQL y sin backend)
 
-1. Abre https://forms.google.com/ con tu cuenta de Google.
-2. Crea un formulario **Confirmación cumpleaños de Eloísa** con:
-   - Nombre de la familia o invitado (Respuesta corta; obligatoria)
-   - ¿Asistirán? (Opción múltiple: Sí / No; obligatoria)
-   - Cantidad de adultos (Desplegable: 0 a 10; obligatoria)
-   - Cantidad de niños/as (Desplegable: 0 a 10; obligatoria)
-   - Mensaje para Eloísa (Párrafo; opcional)
-3. Evita marcar la opción que exige inicio de sesión si deseas recibir respuestas sin cuentas Google. No actives "Límite de 1 respuesta" si no quieres obligar a iniciar sesión.
-4. En **Respuestas**, vincula una **hoja de cálculo de Google Sheets** para visualizar y sumar los asistentes. Mantén la hoja privada.
-5. Publica/activa la recepción de respuestas del formulario (dependiendo de la interfaz actual de Google Forms).
-6. En "Enviar" / "Compartir" / "Insertar HTML" copia la URL que aparece en `src="..."` del código del iframe (la etiqueta HTML completa NO se pega en la configuración).
-7. En `js/config.js`, reemplaza `GOOGLE_FORM_EMBED_URL` por ese `src` y `GOOGLE_FORM_PUBLIC_URL` por el enlace para responder.
+**Estado actual:** la integración con Google Forms está programada, pero no se registrarán asistentes hasta que el organizador cree y publique un formulario real y pegue su enlace. No inventar enlaces ni simular confirmaciones.
 
-**Importante:** hasta que completes las URLs, la página muestra un aviso en la sección RSVP. No simula registros ni afirma que una respuesta se haya guardado. Google Forms gestiona el envío, confirmación y almacenamiento; la web no tiene backend ni PHP.
+1. Entra a [Google Forms](https://forms.google.com/) desde la cuenta que administrará la celebración y crea un formulario **Confirmación de asistencia — primer cumpleaños de Eloísa**.
+2. Usa esta descripción: "¡Gracias por celebrar la primera vuelta al sol de Eloísa! Sábado 17 de octubre de 2026, de 12:00 a 16:00, Santa Corina 518, Estación Central. Por favor, confirma si nos acompañarás."
+3. Crea estas cinco preguntas (en este orden):
+   - **Nombre de la familia o invitado** — respuesta corta, obligatoria.
+   - **¿Nos acompañarán?** — opción múltiple "Sí, asistiremos" / "No podremos asistir", obligatoria.
+   - **Cantidad de adultos** — desplegable con opciones 0, 1, 2, …, 10, obligatoria (0 si no asisten).
+   - **Cantidad de niños/as** — desplegable con opciones 0, 1, 2, …, 10, obligatoria (0 si no asisten).
+   - **Mensaje para Eloísa** — párrafo, opcional.
+4. Configura el mensaje de confirmación: "¡Gracias por responder! ♡ Nos hace muy felices compartir este momento tan especial."
+5. Permite respuestas sin iniciar sesión: no habilites recopilación obligatoria de correo ni la opción "Limitar a 1 respuesta" (la interfaz de Google Forms puede cambiar). Verifica desde una ventana privada antes de compartir.
+6. En la pestaña **Respuestas** de Forms, vincula una hoja de cálculo **Google Sheets** (hoja privada, no la publiques).
+7. **Publica el formulario**, habilita la aceptación de respuestas y copia el enlace **para responder** (termina en `/viewform`). No utilices la URL de edición `/edit`.
+8. Edita `js/config.js` y pega ese único enlace en `GOOGLE_FORM_PUBLIC_URL`. Ejemplo:
+
+```js
+window.ELOISA_CONFIG = Object.freeze({
+  GOOGLE_FORM_PUBLIC_URL: 'https://docs.google.com/forms/d/e/ID_DE_TU_FORMULARIO/viewform',
+  GOOGLE_FORM_EMBED_URL: ''
+});
+```
+
+> El ID es un ejemplo: **no funcionará hasta poner un enlace real**. El sitio genera automáticamente la variante `?embedded=true` y muestra el formulario integrado en la sección de confirmaciones. Se puede usar un enlace completo con parámetros adicionales.
+
+**Enlaces cortos:** si compartes solo una URL `https://forms.gle/…`, el sitio ofrecerá un botón para abrir el formulario en otra pestaña, porque Google no permite integrar directamente ese acortador como iframe. Para una integración dentro de la invitación, comparte el enlace completo de Google Forms.
+
+**Privacidad:** el formulario, la hoja de respuestas y las respuestas deben ser administrados por la familia. No compartas el enlace de edición ni publiques la hoja de cálculo. GitHub Pages aloja exclusivamente archivos públicos y no almacena confirmaciones.
+
+**Cómo comprobarlo:** despliega el sitio, ábrelo en una ventana privada o celular, completa una respuesta de prueba y verifica su llegada en Google Forms → Respuestas y en Google Sheets. El frontend no puede verificar directamente si Google recibió una respuesta dentro del iframe.
 
 ## 2) Crear repositorio nuevo en GitHub
 
