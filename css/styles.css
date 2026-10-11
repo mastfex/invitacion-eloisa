@@ -38,3 +38,70 @@
   .hero .family-message p{font-size:.89rem;line-height:1.58}
   .hero .family-message .family-message-final{font-size:.92rem}
 }
+
+/* Cajita musical flotante: discreta, accesible y adaptable a móvil. */
+.music-player{
+  position:fixed;
+  right:clamp(12px,2.4vw,28px);
+  bottom:calc(15px + env(safe-area-inset-bottom, 0px));
+  z-index:40;
+  max-width:calc(100vw - 24px);
+}
+.music-toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:64px;
+  min-width:218px;
+  max-width:100%;
+  padding:9px 12px;
+  border:1px solid rgba(211,148,175,.58);
+  border-radius:999px;
+  color:#704b5b;
+  background:linear-gradient(118deg,rgba(255,250,245,.98),rgba(255,229,239,.98));
+  box-shadow:0 10px 30px rgba(116,74,94,.19),0 2px 8px rgba(116,74,94,.07);
+  text-align:left;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.music-toggle:hover{transform:translateY(-3px);box-shadow:0 14px 33px rgba(116,74,94,.23)}
+.music-toggle:focus-visible{outline:3px solid #a95786;outline-offset:4px}
+.music-toggle:disabled{opacity:.7;cursor:not-allowed}
+.music-icon{
+  display:grid;
+  place-items:center;
+  flex:0 0 43px;
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  background:#f4cadc;
+  color:#974c72;
+  font:700 1.62rem/1 'Quicksand',sans-serif;
+}
+.music-copy{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.music-title{font:700 .85rem/1.2 'Quicksand',sans-serif;white-space:nowrap}
+.music-status{font:.69rem/1.2 'DM Sans',sans-serif;color:#896f7c;white-space:nowrap}
+.music-control{
+  display:grid;
+  place-items:center;
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  border:1px solid #dcb5c4;
+  border-radius:50%;
+  background:#fffaf9;
+  color:#9b5478;
+  font-size:.82rem;
+}
+.music-toggle[aria-pressed="true"]{background:linear-gradient(118deg,#fff8f4,#f6d5e7)}
+.music-toggle[aria-pressed="true"] .music-icon{animation:music-sway 2.4s ease-in-out infinite}
+.music-toggle[aria-pressed="true"] .music-control{background:#b66b91;color:#fff;border-color:#b66b91}
+@keyframes music-sway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+@media(max-width:600px){
+  .music-player{right:11px;bottom:calc(12px + env(safe-area-inset-bottom, 0px))}
+  .music-toggle{gap:8px;min-height:56px;min-width:190px;padding:7px 9px}
+  .music-icon{width:39px;height:39px;flex-basis:39px;font-size:1.4rem}
+  .music-title{font-size:.78rem}
+  .music-status{font-size:.65rem}
+  .music-control{width:25px;height:25px;flex-basis:25px}
+}
