@@ -2,17 +2,18 @@
 
 Sitio estático de una sola página para **GitHub Pages**. Incluye la tarjeta final ya diseñada, adaptaciones responsive, animaciones respetuosas de preferencias de accesibilidad, ampliación de tarjeta, cuenta regresiva, ubicación en Maps, archivo de calendario y sección RSVP para **Google Forms**.
 
-## Melodía original «Cajita de sueños»
+## Música de cumpleaños con cajita musical
 
-La invitación incluye una melodía original tipo cajita musical: un vals suave en Do mayor (3/4, 94 BPM), compuesto y sintetizado directamente con **Web Audio API** en `js/music-box.js`.
+La invitación reproduce un **arreglo instrumental de la melodía tradicional «Cumpleaños feliz»**. La armonización, el acompañamiento y el timbre digital de cajita musical se sintetizan localmente con **Web Audio API** en `js/music-box.js`, sin archivos de audio externos.
 
-- Un botón flotante permite reproducir y detener la melodía en escritorio y celular.
-- Por respeto a los invitados y por las restricciones de los navegadores, **no se reproduce automáticamente**. Deben pulsar el botón una vez.
-- La música se detiene al salir de la pestaña o bloquear el celular. Al regresar puede volver a activarse.
-- La composición está definida en código: **no se descarga MP3 ni se consulta ningún proveedor de música externo**.
-- En navegadores sin soporte Web Audio, el botón aparece desactivado.
-- El volumen está predefinido y se puede ajustar mediante el volumen del dispositivo.
-- El funcionamiento de Google Forms, confirmaciones y el resto del sitio permanece independiente de la melodía.
+- **Inicio automático cuando el navegador lo permita.** Chrome, Safari y otros navegadores pueden bloquear audio con sonido sin interacción previa.
+- **Si el audio automático está bloqueado, comienza con el primer toque, clic o pulsación de tecla del invitado** dentro de la página; el botón flotante siempre permite reproducir o detener.
+- El botón identifica la canción como **«Cumpleaños feliz ♡»** y muestra el estado de reproducción.
+- Si una persona la pausa, no vuelve a iniciarse automáticamente mientras permanece en esa página.
+- La música se detiene cuando cambia de pestaña o bloquea el celular.
+- La melodía y el acompañamiento se reproducen en bucle; el volumen se ajusta desde el dispositivo.
+- En navegadores sin Web Audio, el botón queda deshabilitado.
+- Google Forms y la confirmación de asistencia funcionan por separado.
 
 ## Antes de publicar: privacidad
 
