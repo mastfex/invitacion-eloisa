@@ -99,8 +99,18 @@ function crearFormularioEloisa() {
       .setRequired(false);
   });
 
-  // Google Forms crea una nueva pestaña de respuestas dentro de la hoja existente.
-  if (form.getDestinationId() !== ss.getId()) {
+  // Un formulario nuevo NO tiene hoja de respuestas todavía.
+  // getDestinationId() lanza una excepción en ese caso: no lo consultamos
+  // sin controlar explícitamente dicha situación.
+  let destinationId = null;
+  try {
+    destinationId = form.getDestinationId();
+  } catch (error) {
+    if (!/no response destination/i.test(String(error))) {
+      throw error; // no ocultar otros errores de permisos o de Google
+    }
+  }
+  if (destinationId !== ss.getId()) {
     form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
   }
 
