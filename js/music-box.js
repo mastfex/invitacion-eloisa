@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * "Cajita de sueños", melodía original creada para la invitación de Eloísa.
- * Vals de cajita musical en Do mayor, 3/4, 94 BPM.
- * Usa Web Audio: sin archivos externos, cookies ni reproducción automática.
+ * "Cumpleaños feliz", arreglo instrumental para la invitación de Eloísa.
+ * Melodía tradicional y arreglo de cajita musical en Do mayor, 3/4, 96 BPM.
+ * Intenta reproducirse al cargar; navegadores móviles pueden exigir un toque.
  */
 (() => {
   const button = document.getElementById('music-toggle');
@@ -19,34 +19,31 @@
     return;
   }
 
-  // Partitura original: notas MIDI [altura, comienzo del compás, duración en pulsos].
-  const melody = [
-    [[72, 0, .7], [76, .9, .7], [79, 1.85, .8]],
-    [[76, 0, .7], [81, .95, .8], [79, 2, .7]],
-    [[77, 0, .7], [76, .9, .7], [72, 1.85, .9]],
-    [[74, 0, .6], [79, .9, .65], [71, 1.8, 1]],
-    [[72, 0, .7], [79, .8, .7], [84, 1.7, 1]],
-    [[83, 0, .7], [79, 1, .7], [76, 2, .7]],
-    [[77, 0, .65], [81, .8, .65], [84, 1.7, .9]],
-    [[79, 0, .65], [76, .8, .7], [74, 1.7, 1]],
-    [[76, 0, .7], [81, .9, .7], [84, 1.85, .8]],
-    [[81, 0, .65], [79, .8, .65], [77, 1.8, .9]],
-    [[74, 0, .7], [77, .9, .75], [81, 1.85, .8]],
-    [[83, 0, .75], [79, .95, .7], [74, 1.85, .95]],
-    [[72, 0, .55], [76, .65, .55], [79, 1.35, .65], [84, 2.15, .65]],
-    [[81, 0, .7], [77, .9, .7], [76, 1.85, .85]],
-    [[79, 0, .6], [83, .8, .6], [86, 1.65, .75]],
-    [[84, 0, 1.55], [79, 1.8, .8]]
+  // "Cumpleaños feliz": melodía tradicional reconocible en Do mayor.
+  // Arreglo instrumental propio, con timbre de cajita musical y acompañamiento de vals.
+  // Notación de cada nota: [altura MIDI, inicio en pulsos dentro del compás, duración].
+  const birthdayVerse = [
+    [[67,0,.42],[67,.5,.42],[69,1,.85],[67,2,.85]], // Cum-ple-a-ños
+    [[72,0,.85],[71,1,1.8]],                         // fe-liz
+    [[67,0,.42],[67,.5,.42],[69,1,.85],[67,2,.85]],
+    [[74,0,.85],[72,1,1.8]],
+    [[67,0,.42],[67,.5,.42],[79,1,.85],[76,2,.85]],
+    [[72,0,.85],[71,1,.85],[69,2,.85]],
+    [[77,0,.42],[77,.5,.42],[76,1,.85],[72,2,.85]],
+    [[74,0,.85],[72,1,1.8]]
   ];
 
+  // Dos estrofas seguidas para una escucha menos corta (~30 segundos).
+  // La segunda conserva la melodía y utiliza un acompañamiento más luminoso.
+  const melody = birthdayVerse.concat(birthdayVerse);
   const harmony = [
-    [60, 64, 67], [57, 60, 64], [53, 57, 60], [55, 59, 62],
-    [60, 64, 67], [52, 55, 59], [53, 57, 60], [55, 59, 62],
-    [57, 60, 64], [53, 57, 60], [50, 53, 57], [55, 59, 62],
-    [60, 64, 67], [53, 57, 60], [55, 59, 62], [60, 64, 67]
+    [60,64,67],[60,64,67],[55,59,62],[60,64,67],
+    [60,64,67],[53,57,60],[53,57,60],[55,59,62],
+    [60,64,67],[60,64,67],[55,59,62],[60,64,67],
+    [60,64,67],[53,57,60],[53,57,60],[60,64,67]
   ];
 
-  const secondsPerBeat = 60 / 94;
+  const secondsPerBeat = 60 / 96;
   const duration = melody.length * 3 * secondsPerBeat;
   const score = [];
   melody.forEach((measure, index) => {
@@ -144,10 +141,10 @@
     display();
   }
 
-  function start() {
+  function start(initialContext = null) {
     if (playing) return;
     try {
-      context = new AudioContextClass();
+      context = initialContext || new AudioContextClass();
       master = context.createGain();
       master.gain.value = .8;
       bus = context.createGain();
@@ -166,7 +163,7 @@
       origin = context.currentTime + .12;
       playing = true;
       display();
-      // Se invoca desde el botón: compatible con la política de audio móvil.
+      // Si el navegador lo requiere, resume el audio después de un gesto.
       context.resume().catch(() => {
         stop();
         status.textContent = 'No se pudo iniciar el audio';
@@ -179,15 +176,86 @@
     }
   }
 
+  // Los navegadores modernos restringen el audio automático con sonido.
+  // Se intenta al cargar; si está bloqueado, empieza con el primer toque
+  // en cualquier parte de la invitación (excepto el botón que tiene control propio).
+  let autoGestureArmed = false;
+  function disarmFirstGesture() {
+    if (!autoGestureArmed) return;
+    autoGestureArmed = false;
+    document.removeEventListener('pointerdown', onPointerDown, true);
+    document.removeEventListener('pointerup', onPointerUp, true);
+    document.removeEventListener('keydown', onKeyDown, true);
+  }
+  function onFirstGesture(event) {
+    if (!autoGestureArmed) return;
+    disarmFirstGesture();
+    if (button.contains(event.target)) return;
+    if (!playing && !document.hidden) start();
+  }
+  function onPointerDown(event) {
+    if (event.pointerType === 'mouse') onFirstGesture(event);
+  }
+  function onPointerUp(event) {
+    if (event.pointerType !== 'mouse') onFirstGesture(event);
+  }
+  function onKeyDown(event) {
+    if (!event.repeat && !event.altKey && !event.ctrlKey && !event.metaKey) onFirstGesture(event);
+  }
+  function armFirstGesture() {
+    if (autoGestureArmed) return;
+    autoGestureArmed = true;
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('pointerup', onPointerUp, true);
+    document.addEventListener('keydown', onKeyDown, true);
+  }
+
   button.addEventListener('click', () => {
+    disarmFirstGesture();
     if (playing) stop();
     else start();
   });
 
-  // No reproducir música cuando la persona cambia de pestaña o bloquea el celular.
+  // Este intento puede funcionar en navegadores que autorizan autoplay.
+  // Si el navegador lo impide, no mostramos reproducción ficticia.
+  function attemptAutoplay() {
+    if (document.hidden) return;
+    armFirstGesture();
+    let candidate;
+    try {
+      candidate = new AudioContextClass();
+      // En algunos navegadores queda pendiente hasta la primera interacción.
+      // Cerramos el intento suspendido para no dejar recursos de audio activos.
+      candidate.resume().then(() => {
+        if (!playing && !document.hidden && candidate.state === 'running') {
+          disarmFirstGesture();
+          start(candidate);
+        } else if (candidate.state !== 'closed') {
+          candidate.close().catch(() => {});
+        }
+      }).catch(() => {});
+      window.setTimeout(() => {
+        if (candidate !== context && candidate.state !== 'closed' && !playing) {
+          candidate.close().catch(() => {});
+        }
+      }, 500);
+    } catch (_) {
+      if (candidate && candidate.state !== 'closed') candidate.close().catch(() => {});
+    }
+  }
+
+  // No reiniciar la música después de que la persona haya decidido pausarla.
+  // Se detiene al cambiar de pestaña o al bloquear el teléfono.
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
+    if (document.hidden) {
+      disarmFirstGesture();
+      stop();
+    }
   });
-  window.addEventListener('pagehide', stop);
+  window.addEventListener('pagehide', () => {
+    disarmFirstGesture();
+    stop();
+  });
   display();
+  attemptAutoplay();
 })();
