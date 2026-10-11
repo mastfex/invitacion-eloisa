@@ -2,6 +2,18 @@
 
 Sitio estático de una sola página para **GitHub Pages**. Incluye la tarjeta final ya diseñada, adaptaciones responsive, animaciones respetuosas de preferencias de accesibilidad, ampliación de tarjeta, cuenta regresiva, ubicación en Maps, archivo de calendario y sección RSVP para **Google Forms**.
 
+## Melodía original «Cajita de sueños»
+
+La invitación incluye una melodía original tipo cajita musical: un vals suave en Do mayor (3/4, 94 BPM), compuesto y sintetizado directamente con **Web Audio API** en `js/music-box.js`.
+
+- Un botón flotante permite reproducir y detener la melodía en escritorio y celular.
+- Por respeto a los invitados y por las restricciones de los navegadores, **no se reproduce automáticamente**. Deben pulsar el botón una vez.
+- La música se detiene al salir de la pestaña o bloquear el celular. Al regresar puede volver a activarse.
+- La composición está definida en código: **no se descarga MP3 ni se consulta ningún proveedor de música externo**.
+- En navegadores sin soporte Web Audio, el botón aparece desactivado.
+- El volumen está predefinido y se puede ajustar mediante el volumen del dispositivo.
+- El funcionamiento de Google Forms, confirmaciones y el resto del sitio permanece independiente de la melodía.
+
 ## Antes de publicar: privacidad
 
 > **MUY IMPORTANTE**: GitHub Pages es público. Esta tarjeta contiene fotos/ilustraciones familiares, el nombre de una menor y una dirección residencial. La opción `noindex` y `robots.txt` reducen la indexación voluntaria por buscadores, pero **no restringen el acceso**. Cualquier persona con el enlace puede verla. El repositorio público también mostrará los archivos. Publica únicamente si quienes aparecen y quienes organizan la celebración están de acuerdo.
@@ -32,7 +44,7 @@ El script crea las cinco preguntas con opciones, publicación para responder sin
 
 ## 1) Activar Google Forms (sin SQL y sin backend)
 
-**Estado actual:** la integración con Google Forms está programada, pero no se registrarán asistentes hasta que el organizador cree y publique un formulario real y pegue su enlace. No inventar enlaces ni simular confirmaciones.
+**Estado actual:** Google Forms ya está conectado en `js/config.js`. Las respuestas se envían al formulario real y se registran en su Google Sheets vinculado. Los pasos siguientes sirven si algún día hay que reemplazar el formulario.
 
 1. Entra a [Google Forms](https://forms.google.com/) desde la cuenta que administrará la celebración y crea un formulario **Confirmación de asistencia — primer cumpleaños de Eloísa**.
 2. Usa esta descripción: "¡Gracias por celebrar la primera vuelta al sol de Eloísa! Sábado 17 de octubre de 2026, de 12:00 a 16:00, Santa Corina 518, Estación Central. Por favor, confirma si nos acompañarás."
@@ -80,6 +92,7 @@ index.html                    # Página de invitación
 css/styles.css                # Diseño responsive y animaciones
 js/config.js                  # Configuración de Google Forms
 js/app.js                     # Cuenta regresiva, modal y montaje del formulario
+js/music-box.js               # Vals original sintetizado con Web Audio y control accesible
 assets/tarjeta-eloisa.webp    # Imagen original de la invitación
 assets/compartir-eloisa.jpg   # Imagen para previsualización en redes
 assets/eloisa-cumpleanos.ics  # Archivo de calendario
