@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Invitacion Eloisa//Primer Cumpleanos//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:eloisa-20261017-primer-cumpleanos@example.invalid
+DTSTAMP:20261011T120000Z
+DTSTART:20261017T150000Z
+DTEND:20261017T190000Z
+SUMMARY:Primera vuelta al sol de Eloísa
+DESCRIPTION:Acompáñanos a celebrar la primera vuelta al sol de Eloísa. ¡Te esperamos!
+LOCATION:Santa Corina 518\, Estación Central\, Santiago\, Chile
+END:VEVENT
+END:VCALENDAR
