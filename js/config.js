@@ -9,6 +9,6 @@
 // Hasta configurar uno, la web indicará que las confirmaciones se abrirán pronto.
 // No pegues enlaces /edit ni el enlace privado a la hoja de respuestas.
 window.ELOISA_CONFIG = Object.freeze({
-  GOOGLE_FORM_PUBLIC_URL: '',
+  GOOGLE_FORM_PUBLIC_URL: 'https://docs.google.com/forms/d/e/1FAIpQLSculEA-XUjyN0qMG1OyYytMdIXhrr2FtU1eST0gQCgO-K74kw/viewform',
   GOOGLE_FORM_EMBED_URL: ''
 });
